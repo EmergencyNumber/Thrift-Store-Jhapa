@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Thrift Store Jhapa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+(function(){
+  emailjs.init({
+    publicKey: "fWCrO89DpdCdcJCEr",
+  });
+})();
+</script>
+   <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --background-color: #f4f4f4;
+            --light-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header styles */
+        header {
+            background-color: rgba(74, 144, 226, 0.9);
+            color: var(--light-color);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(74, 144, 226, 1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--light-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero section styles */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://source.unsplash.com/1600x900/?vintage-store');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--light-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards 0.7s;
+        }
+
+        /* Contact section styles */
+        .contact-section {
+            padding: 100px 0;
+            background-color: var(--light-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-content {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: var(--background-color);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .contact-form.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .contact-form h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-group textarea {
+            height: 150px;
+        }
+
+        button[type="submit"] {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3a7bc8;
+        }
+
+        .contact-info {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .contact-info.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .contact-info h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .info-item i {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-right: 15px;
+        }
+
+        .map-container {
+            margin-top: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer styles */
+        footer {
+            background: var(--primary-color);
+            color: var(--light-color);
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+          footer .contact-link {
+            color: rgb(0, 0, 0); /* Apply red color to the contact link */
+            text-decoration: none; /* Remove underline from the link */
+       }
+
+               footer .contact-link:hover {
+            text-decoration: underline; /* Underline when hovered */
+           color: rgb(255, 3, 3);
+           font-size: large;
+           font-family: Arial, Helvetica, sans-serif;
+           font-style: italic;
+           font-weight: bolder;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 20px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .menu-toggle .bar {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: var(--light-color);
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .nav-links {
+            position: fixed;
+            right: -100%;
+            top: 0;
+            width: 80%;
+            height: 100vh;
+            background-color: rgba(74, 144, 226, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s;
+            z-index: 1000;
+            text-align: center;
+            font-size: x-large;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .nav-links.active {
+            right: 0;
+        }
+
+        .nav-links li {
+            margin: 20px 0;
+        }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-image {
+                margin-bottom: 30px;
+            }
+
+            .mission-icons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .mission-icon {
+                margin-bottom: 30px;
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+            .contact-section {
+    padding: 50px 15px;
+  }
+
+  .contact-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .contact-form, 
+  .contact-info {
+    flex: none;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .contact-form h2, 
+  .contact-info h2 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .form-group label {
+    font-size: 14px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .contact-info .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contact-info .info-item i {
+    font-size: 20px;
+    margin-bottom: 5px;
+  }
+
+  .contact-info .info-item p {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .map-container iframe {
+    height: 200px;
+    width: 100%;
+  }
+        }
+        @media (min-width: 769px) {
+        .menu-toggle {
+            display: none;
+        }
+    }
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <i class="fas fa-recycle"></i>
+                <span>Thrift Store Jhapa</span>
+            </div>
+            <ul class="nav-links">
+             
+                <li><a href="index.html">Home</li>
+                  </a>
+                  <li><a href="index.html#products">Products</a></li>
+                  <li><a href="sell.html" >Selling</a></li>
+                <li><a href="Contact.html">Contact</li>
+               </a>
+                <li><a href="About.html">About Us</li>
+               </a>
+
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Contact Us</h1>
+            <p>Get in touch with Thrift Store Jhapa</p>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container contact-content">
+            <div class="contact-form">
+                <h2>Send Us a Message</h2>
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>Birtamode, Jhapa, Nepal</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <p>Contact Us: <b> <a href="tel:+9779704581290" class="contact-link">+977 9704581290</a></p></b>
+       
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:romanadhikari0504@gmail.com">romanadhikari0504@gmail.com</a>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <p>Sun-Fri: 10:00 AM - 4:00 PM</p>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114487.61227895368!2d87.98037583919137!3d26.63998973644604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e5ba845487437f%3A0x9720a84be90bd617!2sJhapa!5e0!3m2!1sen!2snp!4v1653664887105!5m2!1sen!2snp" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Thrift Store Jhapa. All rights reserved.</p>
+            <p>Contact Us: <b> <a href="tel:+9779704581290" class="contact-link">+977 9704581290</a></p></b>
+        </div>
+    </footer>
+
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+         // Mobile menu toggle
+         const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+        // Animate elements on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.contact-form, .contact-info');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+                const isVisible = (elementTop < window.innerHeight - 100) && (elementBottom >= 0);
+                element.classList.toggle('visible', isVisible);
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('resize', animateOnScroll);
+
+        // Initialize animations
+        animateOnScroll();
+
+    
+    </script>
+    <script>
+        // Initialize EmailJS
+    (function() {
+      emailjs.init('fWCrO89DpdCdcJCEr'); // Replace with your EmailJS user ID
+    })();
+    
+    // Handle form submission
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+    
+      const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        message: document.getElementById('message').value,
+      };
+    
+      // Send the email using EmailJS
+      emailjs.send('service_3sojuzp', 'ContactRoman', formData)
+        .then(function(response) {
+          alert('Message sent successfully!');
+          // Optionally reset the form after submission
+          document.getElementById('contact-form').reset();
+        }, function(error) {
+          alert('Failed to send message, please try again.');
+          console.error('EmailJS Error: ', error);
+        });
+    });
+    
+
+    document.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
+
+    
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Thrift Store Jhapa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --background-color: #f4f4f4;
+            --light-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header styles */
+        header {
+            background-color: rgba(74, 144, 226, 0.9);
+            color: var(--light-color);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(74, 144, 226, 1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--light-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero section styles */
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://source.unsplash.com/1600x900/?thrift-store');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--light-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s ease forwards 0.7s;
+        }
+
+        /* About section styles */
+        .about-section {
+            padding: 100px 0;
+            background-color: var(--light-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-image {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .about-image.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            z-index: -1;
+        }
+
+        .about-text {
+            flex: 1;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .about-text.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+        }
+
+        /* Mission section styles */
+        .mission-section {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mission-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 100px;
+            height: 100px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .mission-section::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .mission-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .mission-icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .mission-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 200px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .mission-icon.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mission-icon i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .mission-icon:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Team section styles */
+        .team-section {
+            padding: 100px 0;
+            background-color: var(--light-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom right, var(--primary-color), transparent);
+            opacity: 0.1;
+        }
+
+        .team-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            text-align: center;
+            background-color: var(--background-color);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .team-member.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 5px solid var(--light-color);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover img {
+            transform: scale(1.1);
+        }
+
+        .team-member h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .team-member p {
+            font-style: italic;
+            color: var(--primary-color);
+        }
+/*footer items*/
+        footer {
+            background: var(--primary-color);
+            color: var(--light-color);
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+          footer .contact-link {
+            color: rgb(0, 0, 0); /* Apply red color to the contact link */
+            text-decoration: none; /* Remove underline from the link */
+       }
+
+               footer .contact-link:hover {
+            text-decoration: underline; /* Underline when hovered */
+           color: rgb(255, 3, 3);
+           font-size: large;
+           font-family: Arial, Helvetica, sans-serif;
+           font-style: italic;
+           font-weight: bolder;
+        }
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-links {
+            position: fixed;
+            right: -100%;
+            top: 0;
+            width: 80%;
+            height: 100vh;
+            background-color: rgba(74, 144, 226, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s;
+            z-index: 1000;
+            text-align: center;
+            font-size: x-large;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .nav-links.active {
+            right: 0;
+        }
+
+        .nav-links li {
+            margin: 20px 0;
+        }
+            .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 20px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .menu-toggle .bar {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: var(--light-color);
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-image {
+                margin-bottom: 30px;
+            }
+
+            
+
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+            
+            @media (min-width: 769px) {
+        .menu-toggle {
+            display: none;
+        }
+    }
+
+        }
+        li{
+            color: black;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <i class="fas fa-recycle"></i>
+                <span>Thrift Store Jhapa</span>
+            </div>
+            <ul class="nav-links">
+                
+                <li><a href="index.html">Home</li></a>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="sell.html" >Selling</a></li>
+                <li><a href="Contact.html">Contact</li>
+                </a>
+
+                <li><a href="About.html">About Us</li>
+                </a>
+
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>About Thrift Store Jhapa</h1>
+            <p>Discover our story, mission, and the team behind our sustainable fashion movement</p>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container about-content">
+            <div class="about-image">
+                <img src="https://www.cdnlogo.com/logos/r/73/recycling.svg" alt="Thrift Store Jhapa">
+            </div>
+            <div class="about-text">
+                <h2>Our Story</h2>
+                <p>Thrift Store Jhapa was founded in 2010 with a simple yet impactful mission: to offer high-quality, gently-used items at affordable prices, while promoting sustainability and community engagement.</p>
+                <p>What began as a small local shop has grown into a beloved community hub, where people come to both sell and buy pre-loved treasures. From vintage clothing to unique home décor, we’ve built a place where sustainability and style go hand in hand.</p>
+                <p>Our commitment to quality, affordability, and environmental responsibility has made us a trusted destination for conscious shoppers and sellers alike in Jhapa and beyond. By choosing to buy or sell with us, you're part of a movement toward a more sustainable and connected world.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mission-section">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <p>Welcome to Thrift Store Jhapa: Sustainable Shopping with a Purpose</p>
+            <div class="mission-icons">
+                <div class="mission-icon">
+                    <i class="fas fa-recycle"></i>
+                    <li>Promote Sustainability</li>
+                    <p>We believe in sustainability and environmental responsibility, and this philosophy influences both our shopping process and the selection of products we offer.</p>
+                </div>
+                <div class="mission-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                  <li>  Support Local Charities </li>
+                   <p>Our mission is to support local communities, and we actively contribute to local charities and causes that make a difference.</p>
+                </div>
+                <div class="mission-icon">
+                    <i class="fas fa-users"></i>
+                    <li>Build Community</li>
+                    <p>We are committed to fostering a strong, supportive community where every member contributes to and benefits from a collaborative environment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <div class="container">
+            <h2>Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <img src="https://img.freepik.com/premium-photo/ai-genrated-female-face-with-smile-white-healthy-teeth_130568-256.jpg" alt="Aarati Sharma">
+                    <h3>Aarati Sharma</h3>
+                    <p>Founder & CEO</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://images.generated.photos/tGHubInlYQSUapLmz6IdvNuew4iOgEMbgEtV0u_WB2s/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NTkzNTE4LmpwZw.jpg" alt="Rajesh Thapa">
+                    <h3>Rajesh Thapa</h3>
+                    <p>Operations Manager</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://images.generated.photos/gwPxk9GLEtqPNMD4nDlIAinpBBYnJ4Nz1XHMxxRH0BU/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92Ml8w/OTg0MzU4LmpwZw.jpg" alt="Sunita Rai">
+                    <h3>Sunita Rai</h3>
+                    <p>Marketing Director</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://img.freepik.com/premium-photo/image-generated-by-ai-portrait-handsome-asian-man_803126-1182.jpg" alt="Bikash Limbu">
+                    <h3>Bikash Limbu</h3>
+                    <p>Community Outreach</p>
+                </div>
+                <div class="team-member">
+                    <img src="https://scontent.fbir7-1.fna.fbcdn.net/v/t39.30808-6/422062528_1105698777223086_6250227903111784183_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=5vmZjE-pj7kQ7kNvgEusDU_&_nc_zt=23&_nc_ht=scontent.fbir7-1.fna&_nc_gid=A6qd1T2IUr-kb88ngc2WqN9&oh=00_AYCycwJyTRpT15WCUINP3bmtunMtaLYxWbWirOjCEFKS2A&oe=67A1316F" alt="Roman Adhikari">
+                    <h3>Roman Adhikari</h3>
+                    <p>Website Creator & Director</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Thrift Store Jhapa. All rights reserved.</p>
+            <p>Contact Us: <b> <a href="tel:+9779704581290" class="contact-link">+977 9704581290</a></p></b>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+                // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+        // Animate elements on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.about-image, .about-text, .mission-icon, .team-member');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+                const isVisible = (elementTop < window.innerHeight - 100) && (elementBottom >= 0);
+                element.classList.toggle('visible', isVisible);
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('resize', animateOnScroll);
+
+        // Initialize animations
+        animateOnScroll();
+
+
+        document.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
+
+   
+    </script>
+</body>
+</html>
+

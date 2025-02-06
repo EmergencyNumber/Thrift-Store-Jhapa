@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Purchase - Thrift Store Jhapa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --background-color: #f4f4f4;
+            --light-color: #ffffff;
+            --success-color: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header styles */
+        header {
+            background-color: rgba(74, 144, 226, 0.9);
+            color: var(--light-color);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(74, 144, 226, 1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--light-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Purchase section styles */
+        .purchase-section {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f6f8fa 0%, #e9ecef 100%);
+        }
+
+        .purchase-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .product-preview {
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: slideInLeft 0.6s ease;
+        }
+
+        .checkout-form {
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: slideInRight 0.6s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .section-title:hover::after {
+            width: 100px;
+        }
+
+        .product-image-main {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .product-image-main:hover {
+            transform: scale(1.02);
+        }
+
+        .product-images-gallery {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .product-image-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .product-image-thumbnail:hover {
+            transform: scale(1.05);
+        }
+
+        .product-details {
+            margin-bottom: 20px;
+        }
+
+        .product-name {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            color: var(--accent-color);
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .product-description {
+            font-size: 16px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+            outline: none;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .payment-option {
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary-color);
+            background: rgba(74, 144, 226, 0.05);
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary-color);
+            background: rgba(74, 144, 226, 0.1);
+        }
+
+        .payment-option i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .order-summary {
+            background: rgba(74, 144, 226, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-top: 2px solid #e1e1e1;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--light-color);
+        }
+
+        .btn-primary:hover {
+            background: #3a7bc8;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: var(--success-color);
+            color: var(--light-color);
+            border-radius: 8px;
+            margin-top: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* eSewa QR Code */
+        .esewa-qr {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .esewa-qr img {
+            max-width: 200px;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .purchase-container {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 10px 0;
+            }
+
+            .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 20px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .menu-toggle .bar {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: var(--light-color);
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        .menu-toggle.active .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .menu-toggle.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .nav-links {
+            position: fixed;
+            right: -100%;
+            top: 0;
+            width: 80%;
+            height: 100vh;
+            background-color: rgba(74, 144, 226, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s;
+            z-index: 1000;
+            text-align: center;
+            font-size: x-large;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .nav-links.active {
+            right: 0;
+        }
+
+        .nav-links li {
+            margin: 20px 0;
+        }
+
+            .product-image-main {
+                height: 200px;
+            }
+
+            .product-images-gallery {
+                justify-content: center;
+            }
+        }
+
+        @media (min-width: 769px) {
+        .menu-toggle {
+            display: none;
+        }
+    }
+      
+      
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-recycle"></i>
+                Thrift Store Jhapa
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="sell.html" >Selling</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </nav>
+    </header>
+
+    <section class="purchase-section">
+        <div class="purchase-container">
+            <div class="product-preview">
+                <hr>
+                <b><label for="textContent" style="color: #e74c3c;">Contact the seller to confirm availability before buying.</label>
+                </b>
+                <br><b><u><a href="tel:+9779704581290">+977 9704 581 290</a></u></b>
+                <hr>
+                <h2 class="section-title">Product Details</h2>
+                <img src="/placeholder.svg" alt="Product Image" class="product-image-main" id="mainImage">
+                <div class="product-images-gallery" id="imageGallery">
+                    <!-- Thumbnail images will be added here dynamically -->
+                </div>
+                <div class="product-details">
+                    <h3 class="product-name" id="productName"></h3>
+                    <p class="product-price" id="productPrice"></p>
+                    <p class="product-description" id="productDescription"></p>
+                </div>
+                <div class="order-summary">
+                    <h3 class="section-title">Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Product Price</span>
+                        <span id="summaryPrice"></span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping</span>
+                        <span>Rs. 150</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total</span>
+                        <span id="summaryTotal"></span>
+                    </div>
+                    <b> <center><label for="text" style="font-size: xx-large;">↓</label></b></center>
+                </div>
+            </div>
+            
+            <div class="checkout-form">
+                <h2 class="section-title">Complete Your Purchase</h2>
+                <form id="purchaseForm">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfn9Pk1fjubS8n_5rhszux7bAc4JKOwpjbVIZr0zSZPBmScDg/viewform?embedded=true" width="330" height="3150" frameborder="0" marginheight="500" marginwidth="500">Loading…</iframe>
+                   
+                </div>
+    </section>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when a link is clicked
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    menuToggle.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            })
+        // Payment option selection
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        const esewaQR = document.getElementById('esewaQR');
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                paymentOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                if (this.dataset.method === 'esewa') {
+                    esewaQR.style.display = 'block';
+                } else {
+                    esewaQR.style.display = 'none';
+                }
+            });
+        });
+
+        // Form submission
+        const purchaseForm = document.getElementById('purchaseForm');
+        const successMessage = document.getElementById('successMessage');
+
+        purchaseForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            purchaseForm.style.opacity = '0.5';
+            purchaseForm.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                purchaseForm.style.display = 'none';
+                successMessage.style.display = 'block';
+            }, 1500);
+        });
+
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Product data (this should match the data in index.html)
+        const products = [
+            {
+                id: 0,
+                name: 'Vintage Leather Jacket',
+                price: 'Rs. 2,800',
+                images: [
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg'
+                ],
+                description: 'A classic vintage leather jacket with a timeless design. Perfect for any casual outfit and built to last for years.'
+            },
+                
+            {
+                id: 1,
+                name: 'Retro Polaroid Camera',
+                price: 'Rs. 4,200',
+                images: [
+                'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg'
+                ],
+                description: 'Capture memories instantly with this retro Polaroid camera. Comes with a pack of film to get you started on your nostalgic journey.'
+            },
+            {
+                id: 2,
+                name: 'Antique Wooden Chair',
+                price: 'Rs. 3,500',
+                images: [
+                'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg'
+                ],
+                description: 'A beautifully crafted antique wooden chair with intricate carvings. Adds a touch of elegance to any room.'
+            },
+            {
+                id: 3,
+                name: 'Classic Record Player',
+                price: 'Rs. 5,000',
+                images: [
+                'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg'
+                ],
+                description: 'Enjoy your vinyl collection with this classic record player. Features built-in speakers and a sleek design.'
+            },
+            {
+                id: 4,
+                name: 'Vintage Silk Saree',
+                price: 'Rs. 1,800',
+                images: [
+                'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg'
+                ],
+                description: 'A stunning vintage silk saree with intricate embroidery. Perfect for special occasions and cultural events.'
+            },
+            {
+                id: 5,
+                name: 'Retro Typewriter',
+                price: 'Rs. 6,500',
+                images: [
+                'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg',
+                    'https://i.pinimg.com/736x/b0/5c/48/b05c4816a3b4d1d0c57e2a67592b5084.jpg'
+                ],
+                description: 'Experience the charm of old-school writing with this fully functional retro typewriter. Great for collectors and writers alike.'
+            },
+            {
+            id: 6,
+                    name: 'o my god ',
+                    price: 'Rs. 6,500',
+                    images: [
+                        'https://i.pinimg.com/736x/96/60/f1/9660f1eb3ec94a7f1651fce22b3ac62d.jpg',
+                                   ],
+                    description: 'Experience the charm of old-school writing with this fully functional retro typewriter. Great for collectors and writers alike.'
+                },
+                 // add your new product what in index html
+            //*****************************************************//
+
+
+
+            //*****************************************************//
+               //add end add in upper 
+
+
+        ];
+
+        // Function to update product details
+        function updateProductDetails(product) {
+            document.getElementById('mainImage').src = product.images[0];
+            document.getElementById('productName').textContent = product.name;
+            document.getElementById('productPrice').textContent = product.price;
+            document.getElementById('productDescription').textContent = product.description;
+            
+            // Update order summary
+            document.getElementById('summaryPrice').textContent = product.price;
+            const total = parseFloat(product.price.replace('Rs. ', '').replace(',', '')) + 150;
+            document.getElementById('summaryTotal').textContent = `Rs. ${total.toFixed(2)}`;
+
+            // Update image gallery
+            const imageGallery = document.getElementById('imageGallery');
+            imageGallery.innerHTML = '';
+            product.images.forEach((img, index) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.src = img;
+                thumbnail.alt = `${product.name} - Image ${index + 1}`;
+                thumbnail.className = 'product-image-thumbnail';
+                thumbnail.addEventListener('click', () => {
+                    document.getElementById('mainImage').src = img;
+                });
+                imageGallery.appendChild(thumbnail);
+            });
+        }
+
+        // Load product details on page load
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const productId = parseInt(getUrlParameter('id'));
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                updateProductDetails(product);
+            } else {
+                console.error('Product not found for ID:', productId);
+                alert('Product not found. Redirecting to home page.');
+                window.location.href = 'index.html';
+            }
+        });
+    
+          document.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
+
+    </script>
+</body>
+</html>
+
